@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import FormTypeContext from "../../../contexts/FormTypeProvider";
-import { InsertNewProduct } from "../../../utils/ProductHandlers";
+import { InsertNewProduct, SaveEditedProduct } from "../../../utils/ProductHandlers";
 
 const productTypeOption = [
   { option: "Weight", value: "weight" },
@@ -10,7 +10,7 @@ const productTypeOption = [
   { option: "Surface", value: "surface" },
 ];
 
-export default function EditProductForm({setProducts}) {
+export default function EditProductForm({ setProducts, focusedItemId }) {
   const { formType } = useContext(FormTypeContext);
 
   return (
@@ -23,7 +23,12 @@ export default function EditProductForm({setProducts}) {
           : "Edit Selected Product  "}
       </h3>
 
-      <form onSubmit={(e) => {e.preventDefault()}} className="my-4 flex flex-col gap-5 md:gap-3">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className="my-4 flex flex-col gap-5 md:gap-3"
+      >
         <div className="flex flex-col md:flex-row gap-1 md:gap-8">
           <label className="font-medium text-sm lg:text-base">Product</label>
           <input
@@ -77,9 +82,17 @@ export default function EditProductForm({setProducts}) {
           <button
             id="form-btn"
             className="bg-blue-500 hover:bg-blue-600 text-white hover:text-gray-100 transition-colors duration-200 px-4 py-2 rounded-md"
-            onClick={formType === "createProd" ? () => {
-              InsertNewProduct(formType, setProducts);
-            } : undefined}
+            onClick={
+              formType === "createProd"
+                ? () => {
+                    InsertNewProduct(formType, setProducts);
+                  }
+                : formType === "editProd"
+                ? () => {
+                  SaveEditedProduct(focusedItemId, setProducts)
+                }
+                : undefined
+            }
           >
             <span className="font-medium">
               {formType === "editProd"

@@ -4,21 +4,17 @@ import { ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { UpdateListProductsLS } from "./utils/ProductHandlers";
 
-// const listShoppingProduct = [
-//   { id: nanoid(), name: "Bread", quantity: 10, unitPrice: 200, collection: "", isFinished: false },
-//   { id: nanoid(), name: "Meat", quantity: 10, unitPrice: 200, collection: "" , isFinished: false },
-// ];
-
 function App() {
-
   const [products, setProducts] = useState(() => {
-    const storedProducts = localStorage.getItem('products');
-    return storedProducts ? JSON.parse(storedProducts) : []
-  })
+    const storedProducts = localStorage.getItem("products");
+    return storedProducts ? JSON.parse(storedProducts) : [];
+  });
+
+  const [focusedItemId, setFocusedItem] = useState(null);
 
   useEffect(() => {
     UpdateListProductsLS(products);
-  },[products]);
+  }, [products]);
 
   return (
     <div className="bg-blue-100 absolute w-full h-auto">
@@ -28,7 +24,12 @@ function App() {
           <ShoppingCart />
         </h1>
         <Header />
-        <BodyTsena currentListProducts={products} setProducts={setProducts}/>
+        <BodyTsena
+          currentListProducts={products}
+          setProducts={setProducts}
+          focusedItemId={focusedItemId}
+          setFocusedItem={setFocusedItem}
+        />
       </div>
     </div>
   );

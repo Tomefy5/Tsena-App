@@ -10,7 +10,7 @@ const btnShoppingAction = [
 
 export default function ShoppingMenuAction() {
 
-  const { formType, changeFormType } = useContext(FormTypeContext);
+  const { changeFormType } = useContext(FormTypeContext);
 
   return (
     <div className="p-3 rounded flex gap-2 mt-2 mb-8 flex-wrap justify-center">
@@ -20,7 +20,6 @@ export default function ShoppingMenuAction() {
           className="bg-lime-500 flex gap-2 text-lime-100 py-2 px-6 rounded-md mx-1 font-medium"
           onClick={index === 0 ? () => {
             changeFormType('createProd');
-            console.log(formType);
           } : undefined}
         >
           <btn.Icon />
