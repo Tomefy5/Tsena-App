@@ -1,23 +1,24 @@
-import { nanoid } from "nanoid/non-secure";
 import BodyTsena from "./components/body/BodyTsena";
 import Header from "./components/header/Header";
 import { ShoppingCart } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UpdateListProductsLS } from "./utils/ProductHandlers";
 
-const listShoppingProduct = [
-  { id: nanoid(), name: "Bread", quantity: 10, unitPrice: 200, collection: "", isFinished: false },
-  { id: nanoid(), name: "Meet", quantity: 10, unitPrice: 200, collection: "" , isFinished: false },
-];
+// const listShoppingProduct = [
+//   { id: nanoid(), name: "Bread", quantity: 10, unitPrice: 200, collection: "", isFinished: false },
+//   { id: nanoid(), name: "Meat", quantity: 10, unitPrice: 200, collection: "" , isFinished: false },
+// ];
 
 function App() {
 
-  const [products] = useState(() => {
+  const [products, setProducts] = useState(() => {
     const storedProducts = localStorage.getItem('products');
-    return storedProducts ? JSON.parse(storedProducts) : listShoppingProduct
+    return storedProducts ? JSON.parse(storedProducts) : []
   })
 
-  UpdateListProductsLS(products);
+  useEffect(() => {
+    UpdateListProductsLS(products);
+  },[products]);
 
   return (
     <div className="bg-blue-100 absolute w-full h-auto">
@@ -27,7 +28,7 @@ function App() {
           <ShoppingCart />
         </h1>
         <Header />
-        <BodyTsena currentListProducts={products} />
+        <BodyTsena currentListProducts={products} setProducts={setProducts}/>
       </div>
     </div>
   );
