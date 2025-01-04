@@ -1,4 +1,3 @@
-import ShoppingCollection from "./ShoppingCollection";
 import ShoppingItem from "./ShoppingItem";
 import { Box, Layers, Tag, CreditCard } from "lucide-react";
 
@@ -10,9 +9,9 @@ const tabShoppingHeader = [
   { name: "Total Price", Icon: CreditCard },
 ];
 
-export default function ShoppingListTab() {
+export default function ShoppingListTab({ currentListProducts }) {
   return (
-    <div className="overflow-auto min-h-[30vh] max-h-[60vh]">
+    <div className="overflow-auto min-h-[30vh] max-h-[60vh] lg:max-h-[80vh]">
       <table className="text-center align-middle table-auto border-collpse borer border-gra-300 w-full text-blue-950 text-sm">
         <thead>
           <tr className="bg-gray-200 text-blue-900">
@@ -27,10 +26,9 @@ export default function ShoppingListTab() {
           </tr>
         </thead>
         <tbody>
-          <ShoppingItem />
-          <ShoppingItem />
-          <ShoppingItem />
-          <ShoppingCollection/>
+          {currentListProducts.map((product, index) => (
+            <ShoppingItem key={index} product={product} />
+          ))}
         </tbody>
       </table>
     </div>
