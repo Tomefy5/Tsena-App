@@ -20,6 +20,8 @@ export default function ShoppingMenuAction() {
           className="bg-lime-500 flex gap-2 text-lime-100 py-2 px-6 rounded-md mx-1 font-medium"
           onClick={index === 0 ? () => {
             changeFormType('createProd');
+          } : index === 1 ? () => {
+            changeFormType('createCollection');
           } : undefined}
         >
           <btn.Icon />

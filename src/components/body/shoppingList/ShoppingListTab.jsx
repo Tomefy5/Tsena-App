@@ -1,3 +1,4 @@
+import ShoppingCollection from "./ShoppingCollection";
 import ShoppingItem from "./ShoppingItem";
 import { Box, Layers, Tag, CreditCard } from "lucide-react";
 
@@ -9,7 +10,14 @@ const tabShoppingHeader = [
   { name: "Total Price", Icon: CreditCard },
 ];
 
-export default function ShoppingListTab({ currentListProducts, setFocusedItem, setProducts }) {
+export default function ShoppingListTab({
+  currentListProducts,
+  setFocusedItem,
+  setProducts,
+  setCollections,
+  collections,
+  setFocusedCollectionsId
+}) {
   return (
     <div className="overflow-auto min-h-[30vh] max-h-[60vh] lg:max-h-[80vh]">
       <table className="text-center align-middle table-auto border-collpse borer border-gra-300 w-full text-blue-950 text-sm">
@@ -27,7 +35,20 @@ export default function ShoppingListTab({ currentListProducts, setFocusedItem, s
         </thead>
         <tbody>
           {currentListProducts.map((product, index) => (
-            <ShoppingItem key={index} product={product} setFocusedItem={setFocusedItem} setProducts={setProducts}/>
+            <ShoppingItem
+              key={index}
+              product={product}
+              setFocusedItem={setFocusedItem}
+              setProducts={setProducts}
+            />
+          ))}
+          {collections.map((collection, index) => (
+            <ShoppingCollection
+              key={index}
+              collection={collection}
+              setCollections={setCollections}
+              setFocusedCollectionsId={setFocusedCollectionsId}
+            />
           ))}
         </tbody>
       </table>

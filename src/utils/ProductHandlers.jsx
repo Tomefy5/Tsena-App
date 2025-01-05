@@ -44,6 +44,15 @@ export function SetProductInfoToForm(productInfos) {
   const productUnitPriceField = document.getElementById(
     "product-unit-price-field"
   );
+
+  if (!productNameField || !productQuantityField || !productUnitPriceField) {
+    console.error("Un ou plusieurs champs du formulaire sont introuvables.");
+    console.log(productNameField)
+    console.log(productQuantityField)
+    console.log(productUnitPriceField)
+    return;
+  }
+
   productNameField.value = productInfos.name;
   productQuantityField.value = productInfos.quantity;
   productUnitPriceField.value = productInfos.unitPrice;

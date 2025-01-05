@@ -3,6 +3,13 @@ import Header from "./components/header/Header";
 import { ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { UpdateListProductsLS } from "./utils/ProductHandlers";
+import { UpdateListCollectionsLS } from "./utils/CollectionHandler";
+
+// const listCollections = [
+//   { id:nanoid(), name: 'Fruits', elements: [] },
+//   { id:nanoid(), name: 'Vegetables', elements: [] },
+//   { id:nanoid(), name: 'Clothes', elements: [] },
+// ];
 
 function App() {
   const [products, setProducts] = useState(() => {
@@ -10,11 +17,21 @@ function App() {
     return storedProducts ? JSON.parse(storedProducts) : [];
   });
 
+  const [collections, setCollections] = useState(() => {
+    const storedCollections = localStorage.getItem('collections');
+    return storedCollections ? JSON.parse(storedCollections) : [];
+  });
+
   const [focusedItemId, setFocusedItem] = useState(null);
+  const [focusedCollectionId, setFocusedCollectionsId] = useState(null);
 
   useEffect(() => {
     UpdateListProductsLS(products);
   }, [products]);
+
+  useEffect(() => {
+    UpdateListCollectionsLS(collections);
+  },[collections]);
 
   return (
     <div className="bg-blue-100 absolute w-full h-auto">
@@ -29,6 +46,10 @@ function App() {
           setProducts={setProducts}
           focusedItemId={focusedItemId}
           setFocusedItem={setFocusedItem}
+          collections={collections}
+          setCollections={setCollections}
+          focusedCollectionId={focusedCollectionId}
+          setFocusedCollectionsId={setFocusedCollectionsId}
         />
       </div>
     </div>

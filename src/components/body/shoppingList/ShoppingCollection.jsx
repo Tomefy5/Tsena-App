@@ -1,5 +1,7 @@
 import { Box, Layers, Tag, CreditCard } from "lucide-react";
-import ShoppingItem from "./ShoppingItem";
+import { useContext } from "react";
+import FormTypeContext from "../../../contexts/FormTypeProvider";
+import { SetCollectionData } from "../../../utils/CollectionHandler";
 
 const tabShoppingHeader = [
   { name: "", Icon: null },
@@ -9,22 +11,36 @@ const tabShoppingHeader = [
   { name: "Total Price", Icon: CreditCard },
 ];
 
-export default function ShoppingCollection() {
+export default function ShoppingCollection({
+  collection,
+  setFocusedCollectionsId,
+}) {
+  const { changeFormType } = useContext(FormTypeContext);
   return (
     <>
-      <tr>
+      <tr
+        onClick={() => {
+          async function CollectionClickHandler() {
+            await changeFormType("editCollection");
+            await setFocusedCollectionsId(collection.id);
+            await SetCollectionData(collection.name);
+          };
+          CollectionClickHandler();
+        }}
+        className="hover:bg-blue-200"
+      >
         <td className="border border-gray-300 px-4 py-2">
           <input className="cursor-pointer" type="checkbox" />
         </td>
         <td className="border border-gray-300 px-4 py-2 font-bold" colSpan={3}>
-          Collection
+          {collection.name}
         </td>
-        <td className="border border-gray-300 px-4 py-2">2 kg</td>
+        <td className="border border-gray-300 px-4 py-2">{1000}</td>
       </tr>
       <tr>
         <td></td>
         <td colSpan={5}>
-          <table className="text-center align-middle table-auto border-collpse borer border-gra-300 w-full text-red-950 text-sm">
+          <table className="text-center align-middle table-auto border-collapse borer border-gra-300 w-full text-red-950 text-sm">
             <thead>
               <tr className="bg-gray-200 text-red-900">
                 {tabShoppingHeader.map((thead, index) => (
@@ -37,11 +53,7 @@ export default function ShoppingCollection() {
                 ))}
               </tr>
             </thead>
-            <tbody>
-              <ShoppingItem />
-              <ShoppingItem />
-              <ShoppingItem />
-            </tbody>
+            <tbody></tbody>
           </table>
         </td>
       </tr>

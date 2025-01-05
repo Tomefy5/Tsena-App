@@ -12,9 +12,13 @@ export default function ShoppingItem({ product, setFocusedItem, setProducts }) {
   return (
     <tr
       onClick={() => {
-        changeFormType("editProd");
-        SetProductInfoToForm(product);
-        setFocusedItem(product.id);
+        async function ItemProductClickHandler() {
+        await changeFormType("editProd");
+        await SetProductInfoToForm(product);
+        await setFocusedItem(product.id);
+        }
+
+        ItemProductClickHandler();
       }}
       onDoubleClick={() => {
         IsFinishedHandler(product.id, setProducts);

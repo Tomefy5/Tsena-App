@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 const FormTypeContext = createContext();
 
 export function FormTypeProvider({ children }) {
-  const [formType, setFormType] = useState("editProd");
+  const [formType, setFormType] = useState("createCollection");
 
   const changeFormType = (newType) => {
     setFormType(newType);
