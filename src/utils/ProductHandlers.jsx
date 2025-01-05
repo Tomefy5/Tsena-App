@@ -13,12 +13,14 @@ export function GetFormData() {
     "product-unit-price-field"
   ).value;
 
+  const productCollection = document.getElementById('product-collection-field').value;
+
   const newProduct = {
     id: nanoid(),
     name: productName,
     quantity: productQuantity,
     unitPrice: productUnitPrice,
-    collection: "",
+    collection: productCollection,
     isFinished: false,
   };
 
@@ -30,7 +32,7 @@ export function InsertNewProduct(formType, setProducts) {
 
   const newProduct = GetFormData();
   const previousProducts = JSON.parse(localStorage.getItem("products"));
-  const newProducts = [...previousProducts, newProduct];
+  const newProducts = [...previousProducts, newProduct];  
 
   localStorage.setItem("products", JSON.stringify(newProducts));
   setProducts(newProducts);
@@ -44,6 +46,7 @@ export function SetProductInfoToForm(productInfos) {
   const productUnitPriceField = document.getElementById(
     "product-unit-price-field"
   );
+  const productCollectionField = document.getElementById('product-collection-field');
 
   if (!productNameField || !productQuantityField || !productUnitPriceField) {
     console.error("Un ou plusieurs champs du formulaire sont introuvables.");
@@ -56,6 +59,7 @@ export function SetProductInfoToForm(productInfos) {
   productNameField.value = productInfos.name;
   productQuantityField.value = productInfos.quantity;
   productUnitPriceField.value = productInfos.unitPrice;
+  productCollectionField.value = productInfos.collection;
 }
 
 export function SaveEditedProduct(id, setProducts) {
@@ -67,6 +71,7 @@ export function SaveEditedProduct(id, setProducts) {
     const productUnitPrice = document.getElementById(
       "product-unit-price-field"
     ).value;
+    const productCollection = document.getElementById('product-collection-field').value;
 
     return prevProducts.map((product) =>
       product.id === id
@@ -75,6 +80,7 @@ export function SaveEditedProduct(id, setProducts) {
             name: productName,
             quantity: productQuantity,
             unitPrice: productUnitPrice,
+            collection: productCollection
           }
         : product
     );

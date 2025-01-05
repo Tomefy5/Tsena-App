@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import ShoppingCollection from "./ShoppingCollection";
 import ShoppingItem from "./ShoppingItem";
 import { Box, Layers, Tag, CreditCard } from "lucide-react";
@@ -16,7 +17,7 @@ export default function ShoppingListTab({
   setProducts,
   setCollections,
   collections,
-  setFocusedCollectionsId
+  setFocusedCollectionsId,
 }) {
   return (
     <div className="overflow-auto min-h-[30vh] max-h-[60vh] lg:max-h-[80vh]">
@@ -34,20 +35,27 @@ export default function ShoppingListTab({
           </tr>
         </thead>
         <tbody>
-          {currentListProducts.map((product, index) => (
-            <ShoppingItem
-              key={index}
-              product={product}
-              setFocusedItem={setFocusedItem}
-              setProducts={setProducts}
-            />
-          ))}
+          {currentListProducts.map((product, index) =>
+            product.collection === "" ? (
+              <ShoppingItem
+                key={index}
+                product={product}
+                setFocusedItem={setFocusedItem}
+                setProducts={setProducts}
+              />
+            ) : (
+              <Fragment key={index}></Fragment>
+            )
+          )}
           {collections.map((collection, index) => (
             <ShoppingCollection
               key={index}
               collection={collection}
               setCollections={setCollections}
               setFocusedCollectionsId={setFocusedCollectionsId}
+              currentListProducts={currentListProducts}
+              setFocusedItem={setFocusedItem}
+              setProducts={setProducts}
             />
           ))}
         </tbody>

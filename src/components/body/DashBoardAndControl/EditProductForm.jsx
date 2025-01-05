@@ -6,15 +6,15 @@ import {
 } from "../../../utils/ProductHandlers";
 import { CreateNewCollections, SaveEditedCollection } from "../../../utils/CollectionHandler";
 
-const productTypeOption = [
-  { option: "Weight", value: "weight" },
-  { option: "Volume", value: "volume" },
-  { option: "Length", value: "length" },
-  { option: "Count", value: "count" },
-  { option: "Surface", value: "surface" },
-];
+// const productTypeOption = [
+//   { option: "Weight", value: "weight" },
+//   { option: "Volume", value: "volume" },
+//   { option: "Length", value: "length" },
+//   { option: "Count", value: "count" },
+//   { option: "Surface", value: "surface" },
+// ];
 
-export default function EditProductForm({ setProducts, focusedItemId, setCollections, focusedCollectionId }) {
+export default function EditProductForm({ setProducts, focusedItemId, setCollections, focusedCollectionId, collections }) {
   const { formType } = useContext(FormTypeContext);
 
   return (
@@ -49,16 +49,17 @@ export default function EditProductForm({ setProducts, focusedItemId, setCollect
           </div>
           <div className="flex flex-col md:flex-row gap-1 md:gap-8">
             <label className="font-medium text-sm lg:text-base">
-              Unit Type
+              Collection
             </label>
             <select
               name="product-type"
-              id="product-type-field"
+              id="product-collection-field"
               className="px-2 py-1 rounded font-medium"
             >
-              {productTypeOption.map((option, index) => (
-                <option key={index} value={option.value}>
-                  {option.option}
+              <option value={null}></option>
+              {collections.map((collection, index) => (
+                <option key={index} value={(collection.name).toLowerCase()}>
+                  {collection.name}
                 </option>
               ))}
             </select>

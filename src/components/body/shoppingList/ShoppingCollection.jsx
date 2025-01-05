@@ -1,7 +1,8 @@
 import { Box, Layers, Tag, CreditCard } from "lucide-react";
-import { useContext } from "react";
+import { Fragment, useContext } from "react";
 import FormTypeContext from "../../../contexts/FormTypeProvider";
 import { SetCollectionData } from "../../../utils/CollectionHandler";
+import ShoppingItem from "./ShoppingItem";
 
 const tabShoppingHeader = [
   { name: "", Icon: null },
@@ -14,6 +15,9 @@ const tabShoppingHeader = [
 export default function ShoppingCollection({
   collection,
   setFocusedCollectionsId,
+  currentListProducts,
+  setFocusedItem,
+  setProducts
 }) {
   const { changeFormType } = useContext(FormTypeContext);
   return (
@@ -53,7 +57,13 @@ export default function ShoppingCollection({
                 ))}
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              {currentListProducts.map((product, index) => (
+                (collection.name).toLowerCase() === product.collection 
+                ? <ShoppingItem key={index} setFocusedItem={setFocusedItem} setProducts={setProducts} product={product} />
+                : <Fragment key={index}></Fragment>
+              ))}
+            </tbody>
           </table>
         </td>
       </tr>

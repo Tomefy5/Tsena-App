@@ -6,7 +6,7 @@ export function UpdateListCollectionsLS(collections) {
 
 export function CreateNewCollections(setCollections) {
     const collectionName = document.getElementById('collection-name-field').value;
-    
+
     if (collectionName === null || collectionName === '') throw new  Error('Collection name must be different of empty or null');
 
     const newCollection = {
@@ -18,7 +18,7 @@ export function CreateNewCollections(setCollections) {
     const prevCollections = JSON.parse(localStorage.getItem('collections'));
     const newCollections = [...prevCollections, newCollection];
 
-    localStorage.setItem('collection',JSON.stringify(newCollections));
+    localStorage.setItem('collections',JSON.stringify(newCollections));
     setCollections(newCollections);
 }
 
@@ -47,3 +47,15 @@ export function SaveEditedCollection(id, setCollections) {
         ))
     ))
 };
+
+export function GetCollectionElements(collection,  products) {
+    const collectionElements = products.map((product) => (
+        product.collection === collection 
+        ? product
+        : "ok"
+    ))
+
+    console.log(collectionElements);
+
+    return collectionElements;  
+}

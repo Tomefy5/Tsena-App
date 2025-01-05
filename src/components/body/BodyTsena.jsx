@@ -12,7 +12,7 @@ export default function BodyTsena({
   setCollections,
   collections,
   focusedCollectionId,
-  setFocusedCollectionsId
+  setFocusedCollectionsId,
 }) {
   return (
     <FormTypeProvider>
@@ -29,10 +29,12 @@ export default function BodyTsena({
           <div className="">
             <ShoppingDashBoard />
             <ShoppingAreaControl
+              currentListProducts={currentListProducts}
               setProducts={setProducts}
               focusedItemId={focusedItemId}
               setCollections={setCollections}
               focusedCollectionId={focusedCollectionId}
+              collections={collections}
             />
           </div>
         </div>
