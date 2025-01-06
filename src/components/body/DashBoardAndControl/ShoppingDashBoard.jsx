@@ -9,6 +9,7 @@ import {
   CalculateCurrentTotalExpenses,
   CalculateOverallSpending,
   ChangeInitialMoney,
+  ConvertCurrentMoney,
 } from "../../../utils/MoneyBoarding";
 import { useContext, useEffect, useState } from "react";
 import CurrencyContext from "../../../contexts/CurrencyProvider";
@@ -20,6 +21,10 @@ export default function ShoppingDashBoard({ currentListProducts }) {
   const [initialMoney, setInitialMoney] = useState(0);
   const [remainingMoney, setRemainingMoney] = useState(0);
   const { currency } = useContext(CurrencyContext);
+
+  useEffect(() => {
+    setInitialMoney(ConvertCurrentMoney(currency, initialMoney))
+  },[currency])
 
   useEffect(() => {
     setRemainingMoney(initialMoney - currentTotalExpenses);

@@ -77,7 +77,7 @@ export default function EditProductForm({ setProducts, focusedItemId, setCollect
           </div>
           <div className="flex flex-col md:flex-row gap-1 md:gap-8">
             <label className="font-medium text-sm lg:text-base">
-              Unit Price (fmg)
+              Unit Price
             </label>
             <input
               type="number"

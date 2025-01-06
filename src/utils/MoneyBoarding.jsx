@@ -32,3 +32,9 @@ export function ChangeInitialMoney() {
     const initialMoney = document.getElementById('initial-money-input').value;
     return initialMoney;
 }
+
+export function ConvertCurrentMoney(currency, money) {
+  return currency === 'fmg'
+  ? (money * 5)
+  : (money / 5)
+}
