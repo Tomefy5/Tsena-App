@@ -5,38 +5,62 @@ import {
   Wallet,
   BarChart,
 } from "lucide-react";
+import {
+  CalculateCurrentTotalExpenses,
+  CalculateOverallSpending,
+  ChangeInitialMoney,
+} from "../../../utils/MoneyBoarding";
+import { useContext, useEffect, useState } from "react";
+import CurrencyContext from "../../../contexts/CurrencyProvider";
 
-const boards = [
-  { name: "Initial Money", currentValue: 1000, Icon: Briefcase, color: "blue" },
-  {
-    name: "Remaining Money",
-    currentValue: 200,
-    Icon: DollarSign,
-    color: "yellow",
-  },
-  {
-    name: "Current Total Expenses",
-    currentValue: 800,
-    Icon: CreditCard,
-    color: "pink",
-  },
-  {
-    name: "Overall Spending",
-    currentValue: 20000,
-    Icon: BarChart,
-    color: "red",
-  },
-  {
-    name: "Current Currency",
-    currentValue: "Ariary",
-    Icon: Wallet,
-    color: "green",
-  },
-];
+export default function ShoppingDashBoard({ currentListProducts }) {
+  const overallSpending = CalculateOverallSpending(currentListProducts);
+  const currentTotalExpenses =
+    CalculateCurrentTotalExpenses(currentListProducts);
+  const [initialMoney, setInitialMoney] = useState(0);
+  const [remainingMoney, setRemainingMoney] = useState(0);
+  const { currency } = useContext(CurrencyContext);
 
-export default function ShoppingDashBoard() {
+  useEffect(() => {
+    setRemainingMoney(initialMoney - currentTotalExpenses);
+  }, [initialMoney, currentTotalExpenses]);
+
+  const boards = [
+    {
+      name: "Initial Money",
+      currentValue: initialMoney,
+      Icon: Briefcase,
+      color: "blue",
+    },
+    {
+      name: "Remaining Money",
+      currentValue: remainingMoney,
+      Icon: DollarSign,
+      color: "yellow",
+    },
+    {
+      name: "Current Total Expenses",
+      currentValue: currentTotalExpenses,
+      Icon: CreditCard,
+      color: "pink",
+    },
+    {
+      name: "Overall Spending",
+      currentValue: overallSpending,
+      Icon: BarChart,
+      color: "red",
+    },
+    {
+      name: "Current Currency",
+      currentValue: currency === "ariary" ? "Ariary" : "Fmg",
+      Icon: Wallet,
+      color: "green",
+    },
+  ];
+
   return (
     <div className="flex gap-5 justify-center flex-wrap">
+      {/* {console.log(overallSpending)} */}
       {boards.map((board, index) => (
         <div key={index} className="bg-indigo-200 py-4 px-4 rounded-md">
           <div
@@ -70,10 +94,23 @@ export default function ShoppingDashBoard() {
             <h3 className="font-medium">{board.name}</h3>
           </div>
           <div className="bg-indigo-100 flex mt-2 rounded items-center justify-center">
-            <span className="font-bold text-md lg:text-lg">
-              {board.currentValue}
-            </span>
+            {index === 0 ? (
+              <input
+                id="initial-money-input"
+                type="number"
+                className="font-bold text-md lg:text-lg bg-indigo-100 rounded text-center w-44"
+                value={initialMoney}
+                onChange={() => {
+                  setInitialMoney(ChangeInitialMoney());
+                }}
+              />
+            ) : (
+              <span className="font-bold text-md lg:text-lg">
+                {board.currentValue}
+              </span>
+            )}
           </div>
+          {console.log(initialMoney)}
         </div>
       ))}
     </div>

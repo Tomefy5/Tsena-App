@@ -5,9 +5,11 @@ import {
   IsFinishedHandler,
   SetProductInfoToForm,
 } from "../../../utils/ProductHandlers";
+import FormFocusContext from "../../../contexts/FormFocusProvider";
 
 export default function ShoppingItem({ product, setFocusedItem, setProducts }) {
   const { changeFormType } = useContext(FormTypeContext);
+  const { setFocusForm } = useContext(FormFocusContext);
 
   return (
     <tr
@@ -16,6 +18,7 @@ export default function ShoppingItem({ product, setFocusedItem, setProducts }) {
         await changeFormType("editProd");
         await SetProductInfoToForm(product);
         await setFocusedItem(product.id);
+        await setFocusForm();
         }
 
         ItemProductClickHandler();

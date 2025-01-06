@@ -4,6 +4,7 @@ import FormTypeContext from "../../../contexts/FormTypeProvider";
 import { SetCollectionData } from "../../../utils/CollectionHandler";
 import ShoppingItem from "./ShoppingItem";
 import FilterContext from "../../../contexts/FilterProvider";
+import FormFocusContext from "../../../contexts/FormFocusProvider";
 
 const tabShoppingHeader = [
   { name: "", Icon: null },
@@ -22,6 +23,7 @@ export default function ShoppingCollection({
 }) {
   const { activeFilter } = useContext(FilterContext);
   const { changeFormType } = useContext(FormTypeContext);
+  const { setFocusForm } = useContext(FormFocusContext);
   return (
     <>
       <tr
@@ -30,6 +32,7 @@ export default function ShoppingCollection({
             await changeFormType("editCollection");
             await setFocusedCollectionsId(collection.id);
             await SetCollectionData(collection.name);
+            await setFocusForm();
           }
           CollectionClickHandler();
         }}

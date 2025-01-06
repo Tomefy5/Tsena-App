@@ -1,21 +1,22 @@
-import { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import FormTypeContext from "../../../contexts/FormTypeProvider";
 import {
   InsertNewProduct,
   SaveEditedProduct,
 } from "../../../utils/ProductHandlers";
 import { CreateNewCollections, SaveEditedCollection } from "../../../utils/CollectionHandler";
-
-// const productTypeOption = [
-//   { option: "Weight", value: "weight" },
-//   { option: "Volume", value: "volume" },
-//   { option: "Length", value: "length" },
-//   { option: "Count", value: "count" },
-//   { option: "Surface", value: "surface" },
-// ];
+import FormFocusContext from "../../../contexts/FormFocusProvider";
 
 export default function EditProductForm({ setProducts, focusedItemId, setCollections, focusedCollectionId, collections }) {
   const { formType } = useContext(FormTypeContext);
+  const { formRef } = useContext(FormFocusContext);
+  const formulaireRef = useRef();
+
+  React.useImperativeHandle(formRef, () => ({
+    focus: () => {
+      formulaireRef.current.focus();
+    }
+  }))
 
   return (
     <div className="bg-indigo-300 p-4 rounded-md">
@@ -44,6 +45,7 @@ export default function EditProductForm({ setProducts, focusedItemId, setCollect
               id="product-name-field"
               type="text"
               className="h-6 rounded px-2 py-1"
+              ref={formulaireRef}
               required
             />
           </div>
@@ -83,12 +85,6 @@ export default function EditProductForm({ setProducts, focusedItemId, setCollect
               id="product-unit-price-field"
               required
             />
-          </div>
-          <div className="flex flex-col md:flex-row gap-1 md:gap-8">
-            <label className="font-medium text-sm lg:text-base">
-              Total Price (fmg)
-            </label>
-            <input type="number" className="h-6 rounded px-2 py-1" />
           </div>
           <div className="mt-5">
             <button
@@ -133,6 +129,7 @@ export default function EditProductForm({ setProducts, focusedItemId, setCollect
               type="text"
               className="h-6 rounded px-2 py-1"
               required
+              ref={formulaireRef}
             />
           </div>
           <div className="mt-5">

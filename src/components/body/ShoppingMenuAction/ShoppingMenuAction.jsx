@@ -1,6 +1,7 @@
 import { PlusCircleIcon, FolderPlus, RotateCw } from "lucide-react";
 import { useContext } from "react";
 import FormTypeContext from "../../../contexts/FormTypeProvider";
+import CurrencyContext from "../../../contexts/CurrencyProvider";
 
 const btnShoppingAction = [
   { label: "Add Product", Icon: PlusCircleIcon },
@@ -10,10 +11,12 @@ const btnShoppingAction = [
 
 export default function ShoppingMenuAction() {
 
+  const { currency, changeCurrency } = useContext(CurrencyContext);
   const { changeFormType } = useContext(FormTypeContext);
 
   return (
     <div className="p-3 rounded flex gap-2 mt-2 mb-8 flex-wrap justify-center">
+      {console.log(currency)}
       {btnShoppingAction.map((btn, index) => (
         <button
           key={index}
@@ -22,7 +25,9 @@ export default function ShoppingMenuAction() {
             changeFormType('createProd');
           } : index === 1 ? () => {
             changeFormType('createCollection');               
-          } : undefined}
+          } : () => {
+            changeCurrency(currency);
+          }}
         >
           <btn.Icon />
           <span>{btn.label}</span>
