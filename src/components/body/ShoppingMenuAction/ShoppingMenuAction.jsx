@@ -17,11 +17,11 @@ export default function ShoppingMenuAction() {
       {btnShoppingAction.map((btn, index) => (
         <button
           key={index}
-          className="bg-lime-500 flex gap-2 text-lime-100 py-2 px-6 rounded-md mx-1 font-medium"
+          className="bg-lime-500 hover:bg-lime-600 transition-colors duration-200  flex gap-2 text-lime-100 py-2 px-6 rounded-md mx-1 font-medium"
           onClick={index === 0 ? () => {
             changeFormType('createProd');
           } : index === 1 ? () => {
-            changeFormType('createCollection');
+            changeFormType('createCollection');               
           } : undefined}
         >
           <btn.Icon />

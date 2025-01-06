@@ -3,6 +3,7 @@ import { Fragment, useContext } from "react";
 import FormTypeContext from "../../../contexts/FormTypeProvider";
 import { SetCollectionData } from "../../../utils/CollectionHandler";
 import ShoppingItem from "./ShoppingItem";
+import FilterContext from "../../../contexts/FilterProvider";
 
 const tabShoppingHeader = [
   { name: "", Icon: null },
@@ -17,8 +18,9 @@ export default function ShoppingCollection({
   setFocusedCollectionsId,
   currentListProducts,
   setFocusedItem,
-  setProducts
+  setProducts,
 }) {
+  const { activeFilter } = useContext(FilterContext);
   const { changeFormType } = useContext(FormTypeContext);
   return (
     <>
@@ -28,7 +30,7 @@ export default function ShoppingCollection({
             await changeFormType("editCollection");
             await setFocusedCollectionsId(collection.id);
             await SetCollectionData(collection.name);
-          };
+          }
           CollectionClickHandler();
         }}
         className="hover:bg-blue-200"
@@ -58,11 +60,42 @@ export default function ShoppingCollection({
               </tr>
             </thead>
             <tbody>
-              {currentListProducts.map((product, index) => (
-                (collection.name).toLowerCase() === product.collection 
-                ? <ShoppingItem key={index} setFocusedItem={setFocusedItem} setProducts={setProducts} product={product} />
-                : <Fragment key={index}></Fragment>
-              ))}
+              {currentListProducts.map((product, index) =>
+                activeFilter === "all" ? (
+                  collection.name.toLowerCase() === product.collection ? (
+                    <ShoppingItem
+                      key={index}
+                      setFocusedItem={setFocusedItem}
+                      setProducts={setProducts}
+                      product={product}
+                    />
+                  ) : (
+                    <Fragment key={index}></Fragment>
+                  )
+                ) : activeFilter === "completed" ? (
+                  collection.name.toLowerCase() === product.collection &&
+                  product.isFinished ? (
+                    <ShoppingItem
+                      key={index}
+                      setFocusedItem={setFocusedItem}
+                      setProducts={setProducts}
+                      product={product}
+                    />
+                  ) : (
+                    <Fragment key={index}></Fragment>
+                  )
+                ) : collection.name.toLowerCase() === product.collection &&
+                  !product.isFinished ? (
+                  <ShoppingItem
+                    key={index}
+                    setFocusedItem={setFocusedItem}
+                    setProducts={setProducts}
+                    product={product}
+                  />
+                ) : (
+                  <Fragment key={index}></Fragment>
+                )
+              )}
             </tbody>
           </table>
         </td>

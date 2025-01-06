@@ -18,7 +18,7 @@ function App() {
   });
 
   const [collections, setCollections] = useState(() => {
-    const storedCollections = localStorage.getItem('collections');
+    const storedCollections = localStorage.getItem("collections");
     return storedCollections ? JSON.parse(storedCollections) : [];
   });
 
@@ -31,7 +31,7 @@ function App() {
 
   useEffect(() => {
     UpdateListCollectionsLS(collections);
-  },[collections]);
+  }, [collections]);
 
   return (
     <div className="bg-blue-100 absolute w-full h-auto">
@@ -40,17 +40,17 @@ function App() {
           <span>TSENA</span>
           <ShoppingCart />
         </h1>
-        <Header />
-        <BodyTsena
-          currentListProducts={products}
-          setProducts={setProducts}
-          focusedItemId={focusedItemId}
-          setFocusedItem={setFocusedItem}
-          collections={collections}
-          setCollections={setCollections}
-          focusedCollectionId={focusedCollectionId}
-          setFocusedCollectionsId={setFocusedCollectionsId}
-        />
+          <Header />
+          <BodyTsena
+            currentListProducts={products}
+            setProducts={setProducts}
+            focusedItemId={focusedItemId}
+            setFocusedItem={setFocusedItem}
+            collections={collections}
+            setCollections={setCollections}
+            focusedCollectionId={focusedCollectionId}
+            setFocusedCollectionsId={setFocusedCollectionsId}
+          />
       </div>
     </div>
   );

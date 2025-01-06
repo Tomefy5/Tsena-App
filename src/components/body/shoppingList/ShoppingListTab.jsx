@@ -1,7 +1,8 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import ShoppingCollection from "./ShoppingCollection";
 import ShoppingItem from "./ShoppingItem";
 import { Box, Layers, Tag, CreditCard } from "lucide-react";
+import FilterContext from "../../../contexts/FilterProvider";
 
 const tabShoppingHeader = [
   { name: "", Icon: null },
@@ -19,6 +20,8 @@ export default function ShoppingListTab({
   collections,
   setFocusedCollectionsId,
 }) {
+  const { activeFilter } = useContext(FilterContext);
+
   return (
     <div className="overflow-auto min-h-[30vh] max-h-[60vh] lg:max-h-[80vh]">
       <table className="text-center align-middle table-auto border-collpse borer border-gra-300 w-full text-blue-950 text-sm">
@@ -36,7 +39,29 @@ export default function ShoppingListTab({
         </thead>
         <tbody>
           {currentListProducts.map((product, index) =>
-            product.collection === "" ? (
+            activeFilter === "all" ? (
+              product.collection === "" ? (
+                <ShoppingItem
+                  key={index}
+                  product={product}
+                  setFocusedItem={setFocusedItem}
+                  setProducts={setProducts}
+                />
+              ) : (
+                <Fragment key={index}></Fragment>
+              )
+            ) : activeFilter === "completed" ? (
+              product.collection === "" && product.isFinished ? (
+                <ShoppingItem
+                  key={index}
+                  product={product}
+                  setFocusedItem={setFocusedItem}
+                  setProducts={setProducts}
+                />
+              ) : (
+                <Fragment key={index}></Fragment>
+              )
+            ) : product.collection === "" && !product.isFinished ? (
               <ShoppingItem
                 key={index}
                 product={product}

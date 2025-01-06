@@ -101,4 +101,14 @@ export function DeleteProductHandler(id, setProducts) {
   setProducts((prevProducts) => (
     prevProducts.filter(product => product.id !== id)
   ));
+};
+
+export function RemoveFromCollectionHandler(id, setProducts) {
+  setProducts((prevProducts) =>
+    prevProducts.map((product) =>
+      product.id === id
+        ? { ...product, collection: "" }
+        : product
+    )
+  );
 }
